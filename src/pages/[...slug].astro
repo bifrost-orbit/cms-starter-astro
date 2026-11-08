@@ -1,0 +1,25 @@
+---
+import { cacheTags } from '@bifrost-orbit-cms/sdk'
+import Layout from '../layouts/Layout.astro'
+import Block from '../components/Block.astro'
+import { cms, isPreview } from '../lib/cms'
+
+const path = '/' + (Astro.params.slug ?? '')
+const preview = await isPreview(Astro.url)
+const result = await cms.resolve({ path, preview })
+
+if (result.kind === 'redirect') return Astro.redirect(result.to, result.status as 301 | 302 | 307 | 308)
+if (result.kind === 'gone') return new Response(null, { status: 410 })
+if (result.kind === 'notFound') return new Response(null, { status: 404 })
+
+const page = result.page
+if (!preview) {
+  Astro.cache.set({ maxAge: 60, swr: 60, tags: [cacheTags.all, cacheTags.page(page.region, path)] })
+}
+---
+
+<Layout title={page.seo.title} description={page.seo.description} lang={page.locale} preview={preview}>
+  <main>
+    {page.components.map((block) => <Block block={block} />)}
+  </main>
+</Layout>

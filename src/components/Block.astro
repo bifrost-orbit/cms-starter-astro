@@ -1,0 +1,13 @@
+---
+import type { CmsComponent } from '@bifrost-orbit-cms/sdk'
+import { registry } from './registry'
+
+interface Props {
+  block: CmsComponent
+}
+
+const { block } = Astro.props
+const Component = registry[block.type]
+---
+
+{Component ? <Component block={block} /> : import.meta.env.DEV && <p data-cms-id={block.id}>No component for <code>{block.type}</code> yet.</p>}

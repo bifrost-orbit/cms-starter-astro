@@ -1,0 +1,30 @@
+---
+import { cmsImageSrcSet, type CmsNode } from '@bifrost-orbit-cms/sdk'
+import type { FeatureSpotlightBlock } from '../cms/types'
+import Block from './Block.astro'
+
+interface Props {
+  block: CmsNode<FeatureSpotlightBlock>
+}
+
+const { block } = Astro.props
+const { eyebrow, heading, body, image, action } = block.fields
+---
+
+<section data-cms-id={block.id} class="spotlight">
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <h2>{heading}</h2>
+  {body && <div set:html={body} />}
+  {image && (
+    <img
+      src={image.url}
+      srcset={cmsImageSrcSet(image.url, image.width)}
+      sizes="(min-width: 768px) 50vw, 100vw"
+      width={image.width ?? undefined}
+      height={image.height ?? undefined}
+      alt={image.alt}
+      loading="lazy"
+    />
+  )}
+  {action && <Block block={action} />}
+</section>

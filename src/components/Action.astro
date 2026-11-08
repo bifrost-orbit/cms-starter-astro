@@ -1,0 +1,17 @@
+---
+import type { CmsNode } from '@bifrost-orbit-cms/sdk'
+import type { ActionBlock } from '../cms/types'
+
+interface Props {
+  block: CmsNode<ActionBlock>
+}
+
+const { block } = Astro.props
+const { label, link, style = 'primary' } = block.fields
+---
+
+{link?.href ? (
+  <a data-cms-id={block.id} class={`button ${style}`} href={link.href} target={link.target ?? undefined}>{label}</a>
+) : (
+  <span data-cms-id={block.id} class={`button ${style}`}>{label}</span>
+)}

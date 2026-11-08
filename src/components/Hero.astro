@@ -1,0 +1,22 @@
+---
+import type { CmsNode } from '@bifrost-orbit-cms/sdk'
+import type { HeroBlock } from '../cms/types'
+import Block from './Block.astro'
+
+interface Props {
+  block: CmsNode<HeroBlock>
+}
+
+const { block } = Astro.props
+const { eyebrow, heading, description, primaryAction, secondaryAction } = block.fields
+---
+
+<section data-cms-id={block.id} class="hero">
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <h1>{heading}</h1>
+  {description && <div set:html={description} />}
+  <div class="actions">
+    {primaryAction && <Block block={primaryAction} />}
+    {secondaryAction && <Block block={secondaryAction} />}
+  </div>
+</section>
