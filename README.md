@@ -2,6 +2,8 @@
 
 An Astro website, rendered on the server with the Node.js adapter, that reads its pages from [CMS Orbit](https://bifrostorbit.com/products/cms-orbit/), the headless CMS in Bifröst Orbit. It is the finished project from the [Astro quickstart](https://docs.bifrostorbit.com/cms/developers/quickstart-astro/): every published page at its own address, your own `.astro` components for the blocks editors place, drafts in the live preview, and a signed webhook that clears the page cache when editors publish.
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/bifrost-orbit/cms-starter-astro?quickstart=1)
+
 ## Set up
 
 1. **Create your copy.** Select **Use this template** on GitHub, or run `gh repo create my-website --template bifrost-orbit/cms-starter-astro --private --clone`.
